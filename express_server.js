@@ -30,13 +30,13 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
-//handler to link the short and long urls
-app.get("/urls/:shortURL", (req, res) => {
-  const shortURL = req.params.shortURL;
-  const longURL = urlDatabase[shortURL];
-  
+//handler to link the short and long urls WITHOUT redirecting instantly
+app.get("/urls/:id", (req, res) => {
+  const id = req.params.id;
+  const longURL = urlDatabase[id];
   if (longURL) {
-    res.redirect(longURL);
+    const templateVars = { id, longURL };
+    res.render("urls_show", templateVars);
   } else {
     res.status(404).send("Error - Short URL not found!");
   }

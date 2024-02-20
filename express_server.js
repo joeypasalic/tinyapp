@@ -62,6 +62,14 @@ app.post("/urls", (req, res) => {
 
 });
 
+app.post("/urls/:id/delete", (req, res) => {
+
+  //request the id
+  const id = req.params.id;
+  delete urlDatabase[id];
+  res.redirect(`/urls`);
+});
+
 //handler to link the short and long urls WITHOUT redirecting instantly
 app.get("/urls/:id", (req, res) => {
   const id = req.params.id;

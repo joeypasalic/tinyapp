@@ -62,9 +62,9 @@ app.post("/urls", (req, res) => {
 
 });
 
-app.post("/urls/:id/edit", (req, res) => {
+app.post("/urls/:id", (req, res) => {
 
-  //request url id then update it in the database
+  //FOR EDITING LINKS request url id then update it in the database
   const id = req.params.id;
   const newLongURL = req.body.longURL;
   urlDatabase[id] = newLongURL;

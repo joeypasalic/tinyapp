@@ -1,6 +1,8 @@
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080; // default port 8080
+
 
 const generateRandomString = function() {
   //function picks a random character from chars string 6 times for our random string
@@ -26,6 +28,7 @@ const urlDatabase = {
 
 //convert the request body from a Buffer into a readable string
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //when url ends with just / (home page) it will say hello
 app.get("/", (req, res) => {
@@ -79,6 +82,15 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect(`/urls`);
 });
 
+//on login
+app.post("/login", (req, res) => {
+  const username = req.body;
+  res.cookie('username', username);
+  res.redirect('/urls');
+  
+});
+
+
 //handler to link the short and long urls WITHOUT redirecting instantly
 app.get("/urls/:id", (req, res) => {
   const id = req.params.id;
@@ -101,3 +113,4 @@ app.get("/u/:id", (req, res) => {
     res.redirect(longURL);
   }
 });
+

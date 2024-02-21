@@ -62,6 +62,15 @@ app.post("/urls", (req, res) => {
 
 });
 
+app.post("/urls/:id/edit", (req, res) => {
+
+  //request url id then update it in the database
+  const id = req.params.id;
+  const newLongURL = req.body.longURL;
+  urlDatabase[id] = newLongURL;
+  res.redirect("/urls");
+});
+
 app.post("/urls/:id/delete", (req, res) => {
 
   //request the id

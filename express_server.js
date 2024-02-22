@@ -1,6 +1,8 @@
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 8080; // default port 8080
+
 
 const generateRandomString = function() {
   //function picks a random character from chars string 6 times for our random string
@@ -26,6 +28,7 @@ const urlDatabase = {
 
 //convert the request body from a Buffer into a readable string
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 //when url ends with just / (home page) it will say hello
 app.get("/", (req, res) => {
@@ -42,11 +45,6 @@ app.get("/urls.json", (req, res) => {
 
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
-app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase };
-  res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
@@ -79,6 +77,15 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect(`/urls`);
 });
 
+//on login
+app.post("/login", (req, res) => {
+  const username = req.body.username;
+  res.cookie('username', username);
+  res.redirect('/urls');
+
+});
+
+
 //handler to link the short and long urls WITHOUT redirecting instantly
 app.get("/urls/:id", (req, res) => {
   const id = req.params.id;
@@ -96,8 +103,24 @@ app.get("/urls/:id", (req, res) => {
 app.get("/u/:id", (req, res) => {
   const id = req.params.id;
   const longURL = urlDatabase[id];
-  
+
   if (longURL) {
     res.redirect(longURL);
   }
+});
+
+app.get("/urls", (req, res) => {
+
+  const templateVars = {
+    username: req.cookies.username,
+    urls: urlDatabase
+  };
+  res.render("urls_index", templateVars);
+});
+
+//clear cookies and redirect on logout
+app.post("/logout", (req, res) => {
+
+  res.clearCookie('username');
+  res.redirect("/urls");
 });

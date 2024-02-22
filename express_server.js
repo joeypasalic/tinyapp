@@ -124,3 +124,14 @@ app.post("/logout", (req, res) => {
   res.clearCookie('username');
   res.redirect("/urls");
 });
+
+//register page
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+//post route for register
+app.post("/register", (req, res) => {
+//to be implemented
+  
+});

@@ -92,6 +92,11 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect(`/urls`);
 });
 
+//login page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 //on login
 app.post("/login", (req, res) => {
   const { email, password } = req.body;

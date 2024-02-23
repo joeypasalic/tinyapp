@@ -99,7 +99,7 @@ app.post("/login", (req, res) => {
   let user = null;
 
   for (const id in users) {
-    if (users.id) {
+    if (users[id] !== undefined) {
       const currentUser = users[id];
 
       if (currentUser.email === email) {
@@ -108,7 +108,6 @@ app.post("/login", (req, res) => {
       }
     }
   }
-
 
   if (user && user.password === password) {
     res.cookie('userid');
@@ -168,10 +167,33 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
 
   const { email, password } = req.body;
-  const id = generateRandomString();
-  users[id] = { id: id, email, password };
+  if (email === '' || password === '') {
+    res.status(400).send("Error - Empty Fields");
+  } else {
+    if (getUserByEmail(email)) {
+      res.status(400).send("Email already exists!");
 
-  res.cookie('userid', id);
-  res.redirect("/urls");
+    } else {
 
+      const id = generateRandomString();
+      users[id] = { id: id, email, password };
+
+      res.cookie('userid', id);
+      res.redirect("/urls");
+    }
+  }
 });
+
+const getUserByEmail = (email) => {
+
+  for (const userId in users) {
+    if (users[userId] !== undefined) {
+      const user = users[userId];
+      if (user.email === email) {
+        return user;
+      }
+    }
+  }
+  return null;
+
+};

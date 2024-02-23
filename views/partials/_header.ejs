@@ -5,23 +5,24 @@
       <span class="navbar-toggler-icon"></span>
       <a class="navbar-brand" href="/urls">TinyApp</a>
     </button>
-  
-      <% if (username) { %>
-        <span class="navbar-text">Welcome, <%= username %></span>
-        <form action="/logout" method="POST" class="form-inline">
+
+    <% if (user) { %>
+      <span class="navbar-text">Welcome, <%= user.email %></span>
+      <form action="/logout" method="POST" class="form-inline">
         <button class="btn btn-outline-dark" type="submit">Logout</button>
       </form>
       <% } else { %>
-      <form type="text" input="text" method="POST" action="/login">
-        <input type="text" name="username" placeholder="Username">
-        <button class="btn btn-outline-dark" type="submit">Login</button>
-    </form>
-    <% } %>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-      </div>
-    </div>
+        <form type="text" input="text" method="POST" action="/login">
+          <input type="text" name="email" placeholder="Email">
+          <input type="password" name="password" placeholder="Password">
+          <button class="btn btn-outline-dark" type="submit">Login</button>
+        </form>
+        <% } %>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="/urls">My URLs</a>
+              <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+            </div>
+          </div>
   </nav>
 </header>

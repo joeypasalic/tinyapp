@@ -12,11 +12,11 @@
         <button class="btn btn-outline-dark" type="submit">Logout</button>
       </form>
       <% } else { %>
-        <form type="text" input="text" method="POST" action="/login">
-          <input type="text" name="email" placeholder="Email">
-          <input type="password" name="password" placeholder="Password">
-          <button class="btn btn-outline-dark" type="submit">Login</button>
-        </form>
+        <div class>
+          <a class="nav-item nav-link " method="POST" href="/login">Login</a>
+          <a class="nav-item nav-link" method="POST" href="/register">Register</a>
+        </div>
+
         <% } %>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
